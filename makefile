@@ -1,3 +1,5 @@
+all: package check
+
 m = [AUTO]
 git:
 	git add -A
