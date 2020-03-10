@@ -1,4 +1,4 @@
-all: package check
+all: package sure 
 
 m = [AUTO]
 git:
@@ -9,5 +9,5 @@ git:
 package:
 	cd lib; cd flutter_package_exporter; make FILE='dart_util'
 
-check:
+sure:
 	cd test; dart test.dart;

@@ -1,3 +1,5 @@
+import 'package:dart_util/src/util/decide.dart';
+
 import '../lib/src/util/test.dart';
 import '../lib/src/extension/string_extension.dart';
 import '../lib/src/extension/number_extension.dart';
@@ -159,4 +161,27 @@ void extensionTest() {
       },
       input: ['b', 'c', 'z', 'a'],
       expectation: ['a', 'b', 'c', 'z']);
+  int testNum = 2;
+  Test<List<int>, List<int>>.single(
+      description: 'Testing callback decision maker.',
+      test: (input, expect) {
+        int next = 0;
+        for (var each in input) if (each != expect[next++]) return false;
+        return true;
+      },
+      input: [
+        Decide.from<int>(() {
+          if (testNum == 2)
+            return 1;
+          else
+            return 0;
+        }),
+        2,
+        3
+      ],
+      expectation: [
+        1,
+        2,
+        3
+      ]);
 }
