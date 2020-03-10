@@ -1,7 +1,7 @@
 all: package sure 
 
 m = [AUTO]
-git:
+git: package sure
 	git add -A
 	git commit -m '$(m)'
 	git push
