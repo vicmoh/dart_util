@@ -3,6 +3,7 @@ import '../lib/src/extension/string_extension.dart';
 import '../lib/src/extension/number_extension.dart';
 import '../lib/src/extension/date_extension.dart';
 import '../lib/src/extension/map_extension.dart';
+import '../lib/src/extension/list_extension.dart';
 
 void extensionTest() {
   Test<String, String>.single(
@@ -148,4 +149,14 @@ void extensionTest() {
       },
       input: {'money': 'number', 'title': 'text', 'description': 'paragraph'},
       expectation: ['number', 'text', 'paragraph']);
+  Test<List<String>, List<String>>.single(
+      description: 'Testing sort by extension for list',
+      test: (input, expect) {
+        int next = 0;
+        var test = input.sortBy((a, b) => a > b ? 1 : -1);
+        for (var each in test) if (each != expect[next++]) return false;
+        return true;
+      },
+      input: ['b', 'c', 'z', 'a'],
+      expectation: ['a', 'b', 'c', 'z']);
 }
