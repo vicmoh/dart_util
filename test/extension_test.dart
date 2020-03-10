@@ -2,6 +2,7 @@ import '../lib/src/util/test.dart';
 import '../lib/src/extension/string_extension.dart';
 import '../lib/src/extension/number_extension.dart';
 import '../lib/src/extension/date_extension.dart';
+import '../lib/src/extension/map_extension.dart';
 
 void extensionTest() {
   Test<String, String>.single(
@@ -137,4 +138,14 @@ void extensionTest() {
         '+34567-890-123-4567'
       ],
       test: (input, expect) => input.toPhoneFormat(withDash: true) == expect);
+  Test<Map<String, String>, List<String>>.single(
+      description: "Testing the map to list function",
+      test: (input, expect) {
+        var test = input.mapToList<String>((key, val) => val);
+        int next = 0;
+        for (var each in test) if (each != expect[next++]) return false;
+        return true;
+      },
+      input: {'money': 'number', 'title': 'text', 'description': 'paragraph'},
+      expectation: ['number', 'text', 'paragraph']);
 }
