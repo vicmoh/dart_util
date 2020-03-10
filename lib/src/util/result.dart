@@ -51,9 +51,9 @@ class Result<T> implements Exception {
 
   /// Class for determining the error type for the client
   /// and developer. Used in [ServerAuth] class. This class
-  /// is used when you [throw] an error.
-  Result.hasError(
-    this.value, {
+  /// is used when you [throw] an error. If value is null it will be null.
+  Result.hasError({
+    this.value,
     @required this.clientMessage,
     @required this.devMessage,
     @required this.errorType,
@@ -92,7 +92,7 @@ class Result<T> implements Exception {
   /// in a loop. This function is only for test purpose only.
   static void test() {
     for (int x = 0; x < 9999; x++) {
-      Result.hasError(null,
+      Result<void>.hasError(
           errorType: ErrorTypes.other,
           devMessage: 'Result.test(): tempError = $x',
           clientMessage: 'This is error number $x.');
