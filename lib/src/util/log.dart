@@ -16,17 +16,25 @@ class Log {
     trackLogs = false;
   }
 
-  /// Function for testing this class.
-  static void runTest() {
-    var logTest = Log('this', 'Hello World!');
-    Log.disable();
-    Test.single(
-        description:
-            'Testing if Log() removes ":", "()" and duplicate white spaces on function.',
-        input: logTest.toString(),
-        expectation: 'Log(): Hello World!',
-        test: (input, expect) =>
-            Log(logTest, 'Hello World!').toString() == expect);
+  /// Trim any white spaces and remove any symbols.
+  static String _trim(String val) {
+    if (val == null) return '[NULL]';
+    return val
+        ?.trim()
+        ?.removeDuplicateWhiteSpaces()
+        ?.replaceAll(RegExp('[^a-zA-Z0-9]+'), '');
+  }
+
+  /// Similar to the Log() function, however,
+  /// this does does not print to the console
+  /// and does not track the logs.
+  /// It will only return the string.
+  static String asString(dynamic object, String message) {
+    String messageTemp = message.trim();
+    String tag = object is String
+        ? _trim(object)
+        : _trim(object?.runtimeType?.toString());
+    return tag == null ? '[NULL]: ' + messageTemp : tag + '(): ' + messageTemp;
   }
 
   /// Print function replacement. This function will
@@ -43,12 +51,8 @@ class Log {
       : timestamp = DateTime.now(),
         this.message = message.trim(),
         this.tag = object is String
-            ? object
-            : object?.runtimeType
-                ?.toString()
-                ?.trim()
-                ?.removeDuplicateWhiteSpaces()
-                ?.replaceAll(RegExp('[)(:\n ]+'), '') {
+            ? _trim(object)
+            : _trim(object?.runtimeType?.toString()) {
     // Keep track error if needed.
     if (trackLogs) {
       if (_stackLogs.length < 256 * 2) {
@@ -75,6 +79,57 @@ class Log {
       };
 
   @override
-  String toString() =>
-      this.tag == null ? '[NULL]: ' : this.tag + '(): ' + this.message;
+  String toString() => this.tag == null
+      ? '[NULL]: ' + this.message
+      : this.tag + '(): ' + this.message;
+
+  /// Function for testing this class.
+  static void runTest() {
+    Log.disable();
+    var logTest = Log('this', 'Hello World!');
+    Test.single(
+        description:
+            'Testing if Log() removes ":", "()" and duplicate white spaces on function.',
+        input: logTest.toString(),
+        expectation: 'Log(): Hello World!',
+        test: (input, expect) =>
+            Log(logTest, 'Hello World!').toString() == expect);
+    Test<String, String>.batch(
+        description: 'Testing if log() removes "():"',
+        test: (input, expect) {
+          return Log(input, 'testing').toString() == expect;
+        },
+        inputs: [
+          'test():',
+          'test():    ',
+          null
+        ],
+        expectations: [
+          'test(): testing',
+          'test(): testing',
+          '[NULL](): testing'
+        ]);
+    Test.single(
+        description:
+            'Testing if Log.asString() removes ":", "()" and duplicate white spaces on function.',
+        input: logTest.toString(),
+        expectation: 'Log(): Hello World!',
+        test: (input, expect) =>
+            Log.asString(logTest, 'Hello World!') == expect);
+    Test<String, String>.batch(
+        description: 'Testing if log.asString() removes "():"',
+        test: (input, expect) {
+          return Log.asString(input, 'testing') == expect;
+        },
+        inputs: [
+          'test():',
+          'test():    ',
+          null
+        ],
+        expectations: [
+          'test(): testing',
+          'test(): testing',
+          '[NULL](): testing'
+        ]);
+  }
 }
