@@ -17,14 +17,14 @@ git: all
 export:
 	cd lib; cd flutter_package_exporter; make FILE='$(EXPORT_FILE)'
 
-# Clean the python caches.
-clean:
-	cd lib/flutter_package_exporter; make clean;
-
 # Run test harsness.
 sure: 
 	cd test; dart --enable-asserts test.dart;
 
+# Clean the python caches.
+clean:
+	cd lib/flutter_package_exporter; make clean;
+
 # Install dependencies.
-install:
+install: clean 
 	cd lib; git clone https://github.com/vicmoh/flutter_package_exporter || cd flutter_package_exporter; git pull;
