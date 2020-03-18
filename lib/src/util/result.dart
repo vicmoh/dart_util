@@ -1,3 +1,4 @@
+import 'package:colorize/colorize.dart';
 import 'package:meta/meta.dart';
 
 enum ErrorTypes { other, none, server, ui, system, validation }
@@ -63,8 +64,10 @@ class Result<T> implements Exception {
     if (_trackErrors) {
       if (_stackErrors.length < 256 * 2) {
         _stackErrors.add(this);
-        print('___________________________________________________________');
-        print('throw ErrorResult(): Caught exception -> ${this.toJson()}\n');
+        print(Colorize(
+            '___________________________________________________________')
+          ..red());
+        print('Result.hasError(): Caught -> ${this.toJson()}\n');
       } else {
         _stackErrors.removeLast();
         _stackErrors.add(this);
