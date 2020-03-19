@@ -64,9 +64,7 @@ class Result<T> implements Exception {
     if (_trackErrors) {
       if (_stackErrors.length < 256 * 2) {
         _stackErrors.add(this);
-        print(Colorize(
-            '___________________________________________________________')
-          ..red());
+        print('___________________________________________________________');
         print('Result.hasError(): Caught -> ${this.toJson()}\n');
       } else {
         _stackErrors.removeLast();
