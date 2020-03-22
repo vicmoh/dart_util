@@ -8,4 +8,12 @@ extension ListExtension<E> on List {
     sorted.sort(compareCallback);
     return sorted;
   }
+
+  /// Check if list contains certain value in the object.
+  /// The [compareCallback] is the condition in which if return true
+  /// you found that object, else return false.
+  bool has(bool Function(E) compareCallback) {
+    for (var each in this) if (compareCallback(each)) return true;
+    return false;
+  }
 }

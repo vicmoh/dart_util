@@ -184,4 +184,14 @@ void extensionTest() {
         2,
         3
       ]);
+  Test<List<String>, bool>.single(
+      description: 'Test list if it has certain object.',
+      test: (i, e) => i.has((el) => el == 'bruh') == e,
+      input: ["yo , yp", "asdfa", "bruh", "fajksdhbf", "asdflkasdfl"],
+      expectation: true);
+  Test<List<String>, bool>.single(
+      description: 'Test list if it has certain object.',
+      test: (i, e) => i.has((el) => el == 'bruh') == e,
+      input: ["yo , yp", "asdfa", "aasdf", 'asdjfnalksdf', 'asd'],
+      expectation: false);
 }
