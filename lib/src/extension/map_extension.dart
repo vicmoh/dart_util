@@ -1,4 +1,4 @@
-extension MapExtension<K, V> on Map {
+extension MapExtension<K, V> on Map<K, V> {
   /// Convert a map to a list of object.
   /// Takes a [callback] of each key and value where it returns
   /// the list of conversion types.

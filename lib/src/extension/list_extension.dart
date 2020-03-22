@@ -1,4 +1,4 @@
-extension ListExtension<E> on List {
+extension ListExtension<E> on List<E> {
   /// Sort and return the list.
   /// The [compareCallback] is a function the compares
   /// two objects. Returns 0 it it is a match,

@@ -155,7 +155,7 @@ void extensionTest() {
       description: 'Testing sort by extension for list',
       test: (input, expect) {
         int next = 0;
-        var test = input.sortBy((a, b) => a > b ? 1 : -1);
+        var test = input.sortBy((a, b) => a.compareTo(b));
         for (var each in test) if (each != expect[next++]) return false;
         return true;
       },
