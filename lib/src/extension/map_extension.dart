@@ -4,7 +4,8 @@ extension MapExtension<K, V> on Map<K, V> {
   /// the list of conversion types.
   List<T> mapToList<T>(T Function(K key, V value) callback) {
     List<T> listOfConversion = [];
-    this.forEach((key, val) => listOfConversion.add(callback(key, val)));
+    for (var each in this.entries)
+      listOfConversion.add(callback(each.key, each.value));
     return listOfConversion;
   }
 }
