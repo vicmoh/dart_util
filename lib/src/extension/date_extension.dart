@@ -103,7 +103,7 @@ extension DateTimeExtension on DateTime {
     if (now.difference(date).inDays == 0)
       return date.getTime(isTwelveHour: isTwelveHour);
     if (now.difference(date).inDays <= 7)
-      return date.toDayAndTime(isTwelveHour: isTwelveHour);
+      return date.getDay() + ' at ' + date.getTime(isTwelveHour: isTwelveHour);
     if (now.difference(date).inDays <= 256)
       return date.toMonthDateAtTime(isTwelveHour: isTwelveHour);
     return date.toMonthDayAndYear(asNumber: true) +
@@ -127,7 +127,12 @@ extension DateTimeExtension on DateTime {
   /// for ex. "11/11/11".
   String toMonthDayAndYear(
       {bool isMonthFullString = false, bool asNumber = false}) {
-    if (asNumber) return '${this.month}/${this.day}/${this.year}';
+    if (asNumber)
+      return this.month.toString().padLeft(2, '0') +
+          '/' +
+          this.day.toString().padLeft(2, '0') +
+          '/' +
+          this.year.toString().substring(2,4);
     return '${this.getMonth(isLongFormat: isMonthFullString)} ${this.day}, ${this.year} ';
   }
 }

@@ -207,11 +207,13 @@ void extensionTest() {
         DateTime(DateTime.now().year, DateTime.now().month,
                 DateTime.now().day - 9)
             .toDynamicTime(),
+        DateTime(2011).toDynamicTime(),
       ],
       expectations: [
         "[0-9]?[0-9]:[0-9][0-9]",
         "[0-9]?[0-9]:[0-9][0-9] (PM|AM)",
-        "[\\w]+ [0-9]?[0-9]:[0-9][0-9] (PM|AM)",
-        "[\\w]+ [0-9]?[0-9] [\\w]+ [0-9]?[0-9]:[0-9][0-9]"
+        "[\\w]+ at [0-9]?[0-9]:[0-9][0-9] (PM|AM)",
+        "[\\w]+ [0-9]?[0-9] at [0-9]?[0-9]:[0-9][0-9]",
+        "[0-9][0-9]/[0-9][0-9]/11"
       ]);
 }
