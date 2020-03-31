@@ -1,38 +1,38 @@
 extension DateTimeExtension on DateTime {
   /// Get the month of the year string.
   /// For example if the month is 1 it will
-  /// return 'Jan'. If [longFormat] is true
+  /// return 'Jan'. If [isLongFormat] is true
   /// it will return 'January'.
-  String getMonth({bool longFormat = false}) {
+  String getMonth({bool isLongFormat = false}) {
     var currentMonth = DateTime.now().month;
     if (this != null) currentMonth = this.month;
-    if (currentMonth == 1) return (longFormat) ? 'January' : 'Jan';
-    if (currentMonth == 2) return (longFormat) ? 'February' : 'Feb';
-    if (currentMonth == 3) return (longFormat) ? 'March' : 'Mar';
-    if (currentMonth == 4) return (longFormat) ? 'April' : 'Apr';
-    if (currentMonth == 5) return (longFormat) ? 'May' : 'May';
-    if (currentMonth == 6) return (longFormat) ? 'June' : 'Jun';
-    if (currentMonth == 7) return (longFormat) ? 'July' : 'Jul';
-    if (currentMonth == 8) return (longFormat) ? 'August' : 'Aug';
-    if (currentMonth == 9) return (longFormat) ? 'September' : 'Sep';
-    if (currentMonth == 10) return (longFormat) ? 'October' : 'Oct';
-    if (currentMonth == 11) return (longFormat) ? 'November' : 'Nov';
-    return (longFormat) ? 'December' : 'Dec';
+    if (currentMonth == 1) return (isLongFormat) ? 'January' : 'Jan';
+    if (currentMonth == 2) return (isLongFormat) ? 'February' : 'Feb';
+    if (currentMonth == 3) return (isLongFormat) ? 'March' : 'Mar';
+    if (currentMonth == 4) return (isLongFormat) ? 'April' : 'Apr';
+    if (currentMonth == 5) return (isLongFormat) ? 'May' : 'May';
+    if (currentMonth == 6) return (isLongFormat) ? 'June' : 'Jun';
+    if (currentMonth == 7) return (isLongFormat) ? 'July' : 'Jul';
+    if (currentMonth == 8) return (isLongFormat) ? 'August' : 'Aug';
+    if (currentMonth == 9) return (isLongFormat) ? 'September' : 'Sep';
+    if (currentMonth == 10) return (isLongFormat) ? 'October' : 'Oct';
+    if (currentMonth == 11) return (isLongFormat) ? 'November' : 'Nov';
+    return (isLongFormat) ? 'December' : 'Dec';
   }
 
   /// Get the current day of the week or from an object,
   /// If the day is 1 then it return 'Mon'. If
-  /// [longFormat] is true, it will return 'Monday'.
-  String getDay({bool longFormat = false}) {
+  /// [isLongFormat] is true, it will return 'Monday'.
+  String getDay({bool isLongFormat = false}) {
     var currentDay = DateTime.now().weekday;
     if (this != null) currentDay = this.weekday;
-    if (currentDay == 1) return (longFormat) ? 'Monday' : 'Mon';
-    if (currentDay == 2) return (longFormat) ? 'Tuesday' : 'Tue';
-    if (currentDay == 3) return (longFormat) ? 'Wednesday' : 'Wed';
-    if (currentDay == 4) return (longFormat) ? 'Thursday' : 'Thu';
-    if (currentDay == 5) return (longFormat) ? 'Friday' : 'Fri';
-    if (currentDay == 6) return (longFormat) ? 'Saturday' : 'Sat';
-    return (longFormat) ? 'Sunday' : 'Sun';
+    if (currentDay == 1) return (isLongFormat) ? 'Monday' : 'Mon';
+    if (currentDay == 2) return (isLongFormat) ? 'Tuesday' : 'Tue';
+    if (currentDay == 3) return (isLongFormat) ? 'Wednesday' : 'Wed';
+    if (currentDay == 4) return (isLongFormat) ? 'Thursday' : 'Thu';
+    if (currentDay == 5) return (isLongFormat) ? 'Friday' : 'Fri';
+    if (currentDay == 6) return (isLongFormat) ? 'Saturday' : 'Sat';
+    return (isLongFormat) ? 'Sunday' : 'Sun';
   }
 
   /// Get the current time of day or from an object,
@@ -70,44 +70,64 @@ extension DateTimeExtension on DateTime {
 
   /// Function to get time difference,
   /// ex. it will return "5h" if time difference 5 hours.,
-  /// If [longFormat] is true. It will show "1 hours" instead of "1h".
-  String getTimeDifference({bool longFormat = false}) {
+  /// If [isLongFormat] is true. It will show "1 hours" instead of "1h".
+  String toTimeDifference({bool isLongFormat = false}) {
     int diffByMins = DateTime.now().difference(this).inMinutes;
     final String longMin = (diffByMins == 1) ? ' minute' : ' minutes';
-    final String minute = (longFormat) ? longMin : 'm';
+    final String minute = (isLongFormat) ? longMin : 'm';
     if (diffByMins < 60) return diffByMins.toString() + minute;
     // By hours
     int diffByHours = DateTime.now().difference(this).inHours;
     final String longHour = (diffByHours == 1) ? ' hour' : ' hours';
-    final String hour = (longFormat) ? longHour : 'h';
+    final String hour = (isLongFormat) ? longHour : 'h';
     if (diffByHours < 24) return diffByHours.toString() + hour;
     // By days
     int diffByDays = DateTime.now().difference(this).inDays;
     final String longDay = (diffByDays == 1) ? ' day' : ' days';
-    final String day = (longFormat) ? longDay : 'd';
+    final String day = (isLongFormat) ? longDay : 'd';
     if (diffByDays < 365) return diffByDays.toString() + day;
     // By years
     int diffByYears = diffByDays / 365 as int;
     final String longYear = (diffByYears == 1) ? ' day' : ' days';
-    final String year = (longFormat) ? longYear : 'd';
+    final String year = (isLongFormat) ? longYear : 'd';
     return diffByYears.toStringAsFixed(0) + year;
+  }
+
+  /// Convert to time string in the format of:
+  /// Current day: "11:11" .
+  /// Within week: "Wed 11:11".
+  /// Within year: 'Jan 7 at 12:30'
+  String toDynamicTime({bool isTwelveHour = false}) {
+    DateTime date = this;
+    var now = DateTime.now();
+    if (now.difference(date).inDays == 0)
+      return date.getTime(isTwelveHour: isTwelveHour);
+    if (now.difference(date).inDays <= 7)
+      return date.toDayAndTime(isTwelveHour: isTwelveHour);
+    if (now.difference(date).inDays <= 256)
+      return date.toMonthDateAtTime(isTwelveHour: isTwelveHour);
+    return date.toMonthDayAndYear(asNumber: true) +
+        ' at ${date.getTime(isTwelveHour: isTwelveHour)}';
   }
 
   /// Get day and time in the format where
   /// "<day> <time>" for ex. "Wed 11:11".
-  String toDayAndTime() => this.getDay() + " " + this.getTime();
+  String toDayAndTime({bool isTwelveHour = false}) =>
+      this.getDay() + " " + this.getTime(isTwelveHour: isTwelveHour);
 
   /// Get the full month, date and time, for ex. 'Jan 7 at 12:30 PM'.
-  String toMonthDateAtTime() =>
-      '${this.getMonth(longFormat: true)} ${this.day} at ${this.getTime(isTwelveHour: true)}';
+  String toMonthDateAtTime(
+          {bool isLongFormat = false, bool isTwelveHour = true}) =>
+      '${this.getMonth(isLongFormat: isLongFormat)} ${this.day} at ${this.getTime(isTwelveHour: isTwelveHour)}';
 
   /// Get a complete readable string of the date time
   /// in format of "<month> <day>, <year>" for ex.
   /// December 13, 1995. If [asNumber] is true, then
   /// it will return in the format of "<month>/<day>/<year>",
   /// for ex. "11/11/11".
-  String toMonthDayAndYear({bool isMonthFullString = false, asNumber = false}) {
+  String toMonthDayAndYear(
+      {bool isMonthFullString = false, bool asNumber = false}) {
     if (asNumber) return '${this.month}/${this.day}/${this.year}';
-    return '${this.getMonth(longFormat: isMonthFullString)} ${this.day}, ${this.year} ';
+    return '${this.getMonth(isLongFormat: isMonthFullString)} ${this.day}, ${this.year} ';
   }
 }

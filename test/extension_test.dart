@@ -64,7 +64,7 @@ void extensionTest() {
       description: 'Testing get month in long format for date time.',
       input: DateTime(2020, 1, 13),
       expectation: 'January',
-      test: (input, expect) => input.getMonth(longFormat: true) == expect);
+      test: (input, expect) => input.getMonth(isLongFormat: true) == expect);
   Test<DateTime, String>.batch(
       description: 'Testing 12 hour clock string.',
       inputs: [
@@ -194,4 +194,24 @@ void extensionTest() {
       test: (i, e) => i.has((el) => el == 'bruh') == e,
       input: ["yo , yp", "asdfa", "aasdf", 'asdjfnalksdf', 'asd'],
       expectation: false);
+
+  Test<String, String>.batch(
+      description: "Testing the date to dynamic string",
+      test: (input, expect) => RegExp(expect).hasMatch(input),
+      inputs: [
+        DateTime.now().toDynamicTime(isTwelveHour: false),
+        DateTime.now().toDynamicTime(isTwelveHour: true),
+        DateTime(DateTime.now().year, DateTime.now().month,
+                DateTime.now().day - 2)
+            .toDynamicTime(isTwelveHour: true),
+        DateTime(DateTime.now().year, DateTime.now().month,
+                DateTime.now().day - 9)
+            .toDynamicTime(),
+      ],
+      expectations: [
+        "[0-9]?[0-9]:[0-9][0-9]",
+        "[0-9]?[0-9]:[0-9][0-9] (PM|AM)",
+        "[\\w]+ [0-9]?[0-9]:[0-9][0-9] (PM|AM)",
+        "[\\w]+ [0-9]?[0-9] [\\w]+ [0-9]?[0-9]:[0-9][0-9]"
+      ]);
 }
