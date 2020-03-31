@@ -1,9 +1,5 @@
 EXPORT_FILE=dart_util
 
-# ---------------------------------------------------------------------------- #
-#                          Below are all the commands                          #
-# ---------------------------------------------------------------------------- #
-
 # Export and test the program.
 all: export sure clean
 
@@ -28,3 +24,6 @@ clean:
 # Install dependencies.
 install: clean 
 	cd lib; git clone https://github.com/vicmoh/flutter_package_exporter || cd flutter_package_exporter; git pull;
+
+new:
+	git branch $(version); git checkout $(version); git push --set-upstream origin $(version); git checkout master;
