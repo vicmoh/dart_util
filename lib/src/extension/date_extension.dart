@@ -106,7 +106,7 @@ extension DateTimeExtension on DateTime {
       return date.getDay() + ' at ' + date.getTime(isTwelveHour: isTwelveHour);
     if (now.difference(date).inDays <= 256)
       return date.toMonthDateAtTime(isTwelveHour: isTwelveHour);
-    return date.toMonthDayAndYear(asNumber: true) +
+    return date.toMonthDayAndYear(asNumber: false) +
         ' at ${date.getTime(isTwelveHour: isTwelveHour)}';
   }
 
@@ -133,6 +133,6 @@ extension DateTimeExtension on DateTime {
           this.day.toString().padLeft(2, '0') +
           '/' +
           this.year.toString().substring(2,4);
-    return '${this.getMonth(isLongFormat: isMonthFullString)} ${this.day}, ${this.year} ';
+    return '${this.getMonth(isLongFormat: isMonthFullString)} ${this.day}, ${this.year}';
   }
 }
