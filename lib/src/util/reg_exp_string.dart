@@ -1,4 +1,4 @@
-extension RegexExtension on RegExp {
+class RegExpStrings {
   /// Regex format for http url.
   /// Http must be at the start.
   static const HTTP_REGEX =
