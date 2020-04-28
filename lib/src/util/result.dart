@@ -1,4 +1,3 @@
-import 'package:colorize/colorize.dart';
 import 'package:meta/meta.dart';
 
 enum ErrorTypes { other, none, server, ui, system, validation }

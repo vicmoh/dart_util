@@ -1,6 +1,6 @@
 name: dart_util
-description: A new Flutter package project.
-version: 0.0.1
+description: Dart utilities.
+version: 0.0.7
 author: Vicky Mohammad
 homepage: https://github.com/vicmoh/dart_util
 
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  colorize: 2.0.0
+  colorize: ^2.0.0
 
 dev_dependencies:
   flutter_test:

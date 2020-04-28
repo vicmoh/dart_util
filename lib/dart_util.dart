@@ -1,6 +1,7 @@
 library dart_util;
 
 export './src/extension/date_extension.dart';
+export './src/extension/regex_extension.dart';
 export './src/extension/string_extension.dart';
 export './src/extension/number_extension.dart';
 export './src/extension/map_extension.dart';
