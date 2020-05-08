@@ -22,7 +22,7 @@ class Log {
     return val
         ?.trim()
         ?.removeDuplicateWhiteSpaces()
-        ?.replaceAll(RegExp('[^a-zA-Z0-9]+'), '');
+        ?.replaceAll(RegExp('[^a-zA-Z0-9.]+'), '');
   }
 
   /// Similar to the Log() function, however,
@@ -131,5 +131,13 @@ class Log {
           'test(): testing',
           '[NULL](): testing'
         ]);
+    Test<String, String>.batch(
+        description: 'Testing if Log() period will be removed',
+        test: (i, e) {
+          var res = Log.asString('test.this(): ', i);
+          return res == e;
+        },
+        inputs: ['test'],
+        expectations: ['test.this(): test']);
   }
 }
