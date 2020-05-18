@@ -44,7 +44,8 @@ void expect(expect, value) {
 void testResult() {
   var percentage = (_totalPass / _caseNum) * 100;
   var fails = '\n';
-  if (percentage != 100) fails += _cyan('failed cases: $_failedCases');
+  if (percentage != 100)
+    fails += _yellow('Failed cases: ') + _cyan('$_failedCases\n');
   print(fails +
       _yellow('Test passing: ') +
       (percentage == 100

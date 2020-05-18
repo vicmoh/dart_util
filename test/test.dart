@@ -9,8 +9,9 @@ void main(List<String> args) {
   Log.runTest();
   testResult();
   Result.suppress();
-  Result.hasError(value: 'Testing',
-		clientMessage: 'bruh',
-		devMessage: 'yoo',
-		errorType: ErrorTypes.other);
+  Result.hasError(
+      value: 'Testing',
+      clientMessage: 'bruh',
+      devMessage: 'yoo',
+      errorType: ErrorTypes.other);
 }
