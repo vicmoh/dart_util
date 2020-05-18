@@ -40,6 +40,10 @@ class Result<T> implements Exception {
   /// The client message error.
   String get message => clientMessage ?? WENT_WRONG_MESSAGE;
 
+  /// Suppress error to be be printed in console..
+  static void suppress() => _suppressErr = true;
+  static bool _suppressErr = false;
+
   /// Class for returning data with message.
   Result(
     this.value, {
@@ -63,8 +67,10 @@ class Result<T> implements Exception {
     if (_trackErrors) {
       if (_stackErrors.length < 256 * 2) {
         _stackErrors.add(this);
-        print('___________________________________________________________');
-        print('Result.hasError(): Caught -> ${this.toJson()}\n');
+        if (!_suppressErr) {
+          print('___________________________________________________________');
+          print('Result.hasError(): Caught -> ${this.toJson()}\n');
+        }
       } else {
         _stackErrors.removeLast();
         _stackErrors.add(this);
