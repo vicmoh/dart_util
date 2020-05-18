@@ -4,9 +4,8 @@ extension ListExtension<E> on List<E> {
   /// two objects. Returns 0 it it is a match,
   /// else one object is greater than the other.
   List<E> sortBy(int Function(E, E) compareCallback) {
-    List<E> sorted = [];
-    sorted.sort(compareCallback);
-    return sorted;
+    this.sort(compareCallback);
+    return List<E>.from(this);
   }
 
   /// Check if list contains certain value in the object.

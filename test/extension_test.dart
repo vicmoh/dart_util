@@ -1,221 +1,172 @@
-import 'package:dart_util/src/util/decide.dart';
-
-import '../lib/src/util/test.dart';
+import '../lib/src/util/tiny_tester.dart';
 import '../lib/src/extension/string_extension.dart';
 import '../lib/src/extension/number_extension.dart';
 import '../lib/src/extension/date_extension.dart';
-import '../lib/src/extension/map_extension.dart';
 import '../lib/src/extension/list_extension.dart';
 
 void extensionTest() {
+  describe('Test if string is a list of char string.', () {
+    expect('t', 'test string'[3]);
+  });
 
-   
-  Test<String, String>.single(
-      description: 'Testing if string has access like list.',
-      input: 'test string',
-      expectation: 't',
-      test: (input, expect) => input[3] == expect);
-  Test<String, String>.single(
-      description: 'Testing toNumOnlyString().',
-      input: 'hello123 world!',
-      expectation: '123',
-      test: (input, expect) => input.toNumOnlyString() == expect);
-  Test<String, bool>.batch(
-      description: 'Testing is number alphanumeric.',
-      inputs: ['testing123', 'testing-123', 'testing 123'],
-      expectations: [true, false, false],
-      test: (input, expect) => input.isAlphanumeric() == expect);
-  Test<String, String>.single(
-      description: 'Testing ellipsis.',
-      input: 'Some string being tested.',
-      expectation: 'Some string...',
-      test: (input, expect) => input.ellipsis(14) == expect);
-  Test<String, String>.single(
-      description: 'Testing func to change the first char as upper case.',
-      input: 'hello world!',
-      expectation: 'Hello world!',
-      test: (input, expect) => input.toSentenceCase() == expect);
-  Test<String, String>.single(
-      description: 'Testing title case.',
-      input: 'The hello world and the money in the bucket',
-      expectation: 'The Hello World and the Money in the Bucket',
-      test: (input, expect) => input.toTitleCase() == expect);
-  Test<num, String>.batch(
-      description: 'Testing short form numbers.',
-      inputs: [1000, 999.9, 999999, 999500, 1500000],
-      expectations: ['1k', '999.9', '999.9k', '999.5k', '1.5m'],
-      test: (input, expect) => input.toShortForm() == expect);
-  Test<String, bool>.batch(
-      description: 'Check if email is a valid format.',
-      inputs: [
-        'teddy_bear_master@hotmail.co',
-        'teddy_bear_master_hotmail.com',
-        'teddy_bear_master@hotmail.',
-        'teddy-bear-master@hotmail.i',
-        'hotmail@i.i',
-        '@i.i'
-      ],
-      expectations: [true, false, false, true, true, false],
-      test: (input, expect) => input.isValidEmailFormat() == expect);
-  Test<DateTime, String>.single(
-      description: 'Testing get month for date time.',
-      input: DateTime(2020, 12, 13),
-      expectation: 'Dec',
-      test: (input, expect) => input.getMonth() == expect);
-  Test<DateTime, String>.single(
-      description: 'Testing get month in long format for date time.',
-      input: DateTime(2020, 1, 13),
-      expectation: 'January',
-      test: (input, expect) => input.getMonth(isLongFormat: true) == expect);
-  Test<DateTime, String>.batch(
-      description: 'Testing 12 hour clock string.',
-      inputs: [
-        DateTime(2020, 1, 1, 2, 0, 0),
-        DateTime(2020, 1, 1, 20, 0, 0),
-        DateTime(2020, 1, 1, 15, 0, 0)
-      ],
-      expectations: ['2:00 AM', '8:00 PM', '3:00 PM'],
-      test: (input, expect) => input.getTime(isTwelveHour: true) == expect);
-  Test<String, String>.batch(
-      description: 'Test sentence case string',
-      inputs: [
-        'hello World!',
-        'hello World',
-        'hello World:',
-        'hello World..',
-        'hello World?',
-        'Test sentence case string'
-      ],
-      expectations: [
-        'Hello World!',
-        'Hello World.',
-        'Hello World:',
-        'Hello World..',
-        'Hello World?',
-        'Test sentence case string.'
-      ],
-      test: (input, expect) =>
-          input.toSentenceCase(withPeriod: true) == expect);
-  Test<String, String>.batch(
-      description: 'testing the phone format for the string',
-      inputs: [
-        '15191234567',
-        'asdfkl! ajnsdflkja1519anlksdj+ -a123sasd kldfjn4a5df6a7faasdf  \n',
-        '1234567890123',
-        '123456789012345'
-      ],
-      expectations: [
-        '+1 519 123 4567',
-        '+1 519 123 4567',
-        '+123 456 789 0123',
-        '+12345 678 901 2345'
-      ],
-      test: (input, expect) => input.toPhoneFormat() == expect);
-  Test<String, String>.batch(
-      description: 'testing the phone format for the string with no spaces',
-      inputs: [
-        '15191234567',
-        'asdfkl! ajnsdflkja1519anlksdj+ -a123sasd kldfjn4a5df6a7faasdf  \n',
-        '1234567890123',
-        '123456789012345'
-      ],
-      expectations: [
-        '+15191234567',
-        '+15191234567',
-        '+1234567890123',
-        '+123456789012345'
-      ],
-      test: (input, expect) => input.toPhoneFormat(noSpaces: true) == expect);
-  Test<String, String>.batch(
-      description: 'testing the phone format for the string with dash',
-      inputs: [
-        '15191234567',
-        'asdfkl! ajnsdflkja1519anlksdj+ -a123sasd kldfjn4a5df6a7faasdf  \n',
-        '1234567890123',
-        '123456789012345',
-        '12345678901234567',
-      ],
-      expectations: [
-        '+1-519-123-4567',
-        '+1-519-123-4567',
-        '+123-456-789-0123',
-        '+12345-678-901-2345',
-        '+34567-890-123-4567'
-      ],
-      test: (input, expect) => input.toPhoneFormat(withDash: true) == expect);
-  Test<Map<String, String>, List<String>>.single(
-      description: "Testing the map to list function",
-      test: (input, expect) {
-        var test = input.mapToList<String>((key, val) => val);
-        int next = 0;
-        for (var each in test) if (each != expect[next++]) return false;
-        return true;
-      },
-      input: {'money': 'number', 'title': 'text', 'description': 'paragraph'},
-      expectation: ['number', 'text', 'paragraph']);
-  Test<List<String>, List<String>>.single(
-      description: 'Testing sort by extension for list',
-      test: (input, expect) {
-        int next = 0;
-        var test = input.sortBy((a, b) => a.compareTo(b));
-        for (var each in test) if (each != expect[next++]) return false;
-        return true;
-      },
-      input: ['b', 'c', 'z', 'a'],
-      expectation: ['a', 'b', 'c', 'z']);
-  int testNum = 2;
-  Test<List<int>, List<int>>.single(
-      description: 'Testing callback decision maker.',
-      test: (input, expect) {
-        int next = 0;
-        for (var each in input) if (each != expect[next++]) return false;
-        return true;
-      },
-      input: [
-        Decide.from<int>(() {
-          if (testNum == 2)
-            return 1;
-          else
-            return 0;
-        }),
-        2,
-        3
-      ],
-      expectation: [
-        1,
-        2,
-        3
-      ]);
-  Test<List<String>, bool>.single(
-      description: 'Test list if it has certain object.',
-      test: (i, e) => i.has((el) => el == 'bruh') == e,
-      input: ["yo , yp", "asdfa", "bruh", "fajksdhbf", "asdflkasdfl"],
-      expectation: true);
-  Test<List<String>, bool>.single(
-      description: 'Test list if it has certain object.',
-      test: (i, e) => i.has((el) => el == 'bruh') == e,
-      input: ["yo , yp", "asdfa", "aasdf", 'asdjfnalksdf', 'asd'],
-      expectation: false);
+  describe("toNumOnlyString() should return substring containing number.", () {
+    expect('123', 'hello123 world!'.toNumOnlyString());
+  });
 
-  Test<String, String>.batch(
-      description: "Testing the date to dynamic string",
-      test: (input, expect) => RegExp(expect).hasMatch(input),
-      inputs: [
-        DateTime.now().toDynamicTime(isTwelveHour: false),
-        DateTime.now().toDynamicTime(isTwelveHour: true),
-        DateTime(DateTime.now().year, DateTime.now().month,
-                DateTime.now().day - 2)
-            .toDynamicTime(isTwelveHour: true),
-        DateTime(DateTime.now().year, DateTime.now().month,
-                DateTime.now().day - 9)
-            .toDynamicTime(),
-        DateTime(2011).toDynamicTime(),
-      ],
-      expectations: [
-        "[0-9]?[0-9]:[0-9][0-9]",
-        "[0-9]?[0-9]:[0-9][0-9] (PM|AM)",
-        "[\\w]+ at [0-9]?[0-9]:[0-9][0-9] (PM|AM)",
-        "[\\w]+ [0-9]?[0-9] at [0-9]?[0-9]:[0-9][0-9]",
-        "[\\w]+ [0-9]?[0-9], [0-9]* at [0-9]?[0-9]:[0-9][0-9]",
-      ]);
+  describe("isAlphanumeric() should accept only alphabets and numbers.", () {
+    expect(true, 'testing123'.isAlphanumeric());
+  });
+
+  describe("isalphanumeric() should not accept dash.", () {
+    expect(false, 'testing-123'.isAlphanumeric());
+  });
+
+  describe("isalphanumeric() should not accept spaces.", () {
+    expect(false, 'testing 123'.isAlphanumeric());
+  });
+
+  describe('ellipsis() should show corresponding length.', () {
+    expect('Some string...', 'Some string being tested.'.ellipsis(14));
+  });
+
+  describe('toSentenceCase() should only capitalize the first char.', () {
+    expect('Hello world!', 'hello world!'.toSentenceCase());
+  });
+
+  describe(
+      'toSentenceCase(withPeriod: true) should add period if it doesn\'t exist.',
+      () {
+    expect('Hello world.', 'hello world'.toSentenceCase(withPeriod: true));
+  });
+
+  describe(
+      'toSentenceCase(withPeriod: true) should not add period if it exist.',
+      () {
+    expect('Hello world.', 'hello world.'.toSentenceCase(withPeriod: true));
+  });
+
+  describe('toTitleCase() should upper case words that is necessary.', () {
+    expect('The Hello World and the Money in the Bucket',
+        'The hello world and the money in the bucket'.toTitleCase());
+  });
+
+  describe('toShortForm() should convert 1000 to 1k.', () {
+    expect('1k', 1000.toShortForm());
+  });
+
+  describe('toShortForm() should convert 999.9 to 999.9.', () {
+    expect('999.9', 999.9.toShortForm());
+  });
+
+  describe('toShortForm() should convert 999999 to 999.9k.', () {
+    expect('999.9k', 999999.toShortForm());
+  });
+
+  describe('toShortForm() should convert 999500 to 999.5k.', () {
+    expect('999.5k', 999500.toShortForm());
+  });
+
+  describe('toShortForm() should convert 1500000 to 1.5m.', () {
+    expect('1.5m', 1500000.toShortForm());
+  });
+
+  describe('isValidEmailFormat() i@i.i should be valid.', () {
+    expect(true, 'i@i.i'.isValidEmailFormat());
+  });
+
+  describe('isValidEmailFormat() missing @ should not be accepted.', () {
+    expect(false, 'teddy_bear_master_hotmail.com'.isValidEmailFormat());
+  });
+
+  describe('isValidEmailFormat() should allow dash in first section.', () {
+    expect(true, 'teddy-bear-master@hotmail.i'.isValidEmailFormat());
+  });
+
+  describe('getMonth() should get the short form month string.', () {
+    expect('Jan', DateTime(2020, 1, 13).getMonth());
+  });
+
+  describe(
+      'getMonth(isLongFormat: true) should get the long form month string.',
+      () {
+    expect('January', DateTime(2020, 1, 13).getMonth(isLongFormat: true));
+  });
+
+  describe(
+      'getTime(isTwelveHour: true) should get correct 2:00 AM twelve hour time.',
+      () {
+    var test = DateTime(2020, 1, 1, 2, 0, 0).getTime(isTwelveHour: true);
+    expect('2:00 AM', test);
+  });
+
+  describe(
+      'gettime(istwelvehour: true) should get correct 8:00 am twelve hour time.',
+      () {
+    var test = DateTime(2020, 1, 1, 20, 0, 0).getTime(isTwelveHour: true);
+    expect('8:00 PM', test);
+  });
+
+  describe(
+      'gettime(istwelvehour: true) should get correct 8:00 am twelve hour time.',
+      () {
+    var test = DateTime(2020, 1, 1, 15, 0, 0).getTime(isTwelveHour: true);
+    expect('3:00 PM', test);
+  });
+
+  describe('sortBy() list should be able to sort.', () {
+    expect(
+      ['a', 'b', 'c', 'y', 'z'].toString(),
+      ['b', 'c', 'y', 'z', 'a'].sortBy((a, b) => a.compareTo(b)).toString(),
+    );
+  });
+
+  describe('list.has() should return true if at least one condition is true.',
+      () {
+    expect(
+        true,
+        ["yo , yp", "asdfa", "bruh", "fajksdhbf", "asdflkasdfl"]
+            .has((el) => el == 'bruh'));
+  });
+
+  describe('list.has() should return false if condition is never true.', () {
+    expect(
+        false,
+        ["yo , yp", "asdfa", "aasdf", 'asdjfnalksdf', 'asd']
+            .has((el) => el == 'bruh'));
+  });
+
+  describe('toDynamicTime(isTwelveHour: false) should return without AM/PM',
+      () {
+    var date = DateTime.now().toDynamicTime(isTwelveHour: false);
+    expect(true, RegExp("[0-9]?[0-9]:[0-9][0-9]").hasMatch(date));
+  });
+
+  describe('toDynamicTime(isTwelveHour: true) should return with AM/PM', () {
+    var date = DateTime.now().toDynamicTime(isTwelveHour: true);
+    expect(true, RegExp("[0-9]?[0-9]:[0-9][0-9] (PM|AM)").hasMatch(date));
+  });
+
+  describe('toDynamicTime() 2 days ago should return with the day.', () {
+    var date = DateTime(
+            DateTime.now().year, DateTime.now().month, DateTime.now().day - 2)
+        .toDynamicTime(isTwelveHour: true);
+    expect(true,
+        RegExp("[\\w]+ at [0-9]?[0-9]:[0-9][0-9] (PM|AM)").hasMatch(date));
+  });
+
+  describe('toDynamicTime() 9 days ago should return the month.', () {
+    var date = DateTime(
+            DateTime.now().year, DateTime.now().month, DateTime.now().day - 9)
+        .toDynamicTime();
+    expect(true,
+        RegExp("[\\w]+ [0-9]?[0-9] at [0-9]?[0-9]:[0-9][0-9]").hasMatch(date));
+  });
+
+  describe('toDynamicTime() year 2011 should return the year.', () {
+    var date = DateTime(2011).toDynamicTime();
+    expect(
+        true,
+        RegExp("[\\w]+ [0-9]?[0-9], [0-9]* at [0-9]?[0-9]:[0-9][0-9]")
+            .hasMatch(date));
+  });
 }

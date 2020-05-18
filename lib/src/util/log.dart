@@ -88,7 +88,6 @@ class Log {
   static void runTest() {
     const debug = "Log(): ";
     Log.disable();
-    print('Testing Log()');
 
     describe('Log() should remove ":", "()" and duplicate white spaces.', () {
       expect('Log(): Hello World!',
