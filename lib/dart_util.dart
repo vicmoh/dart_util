@@ -11,6 +11,5 @@ export './src/util/ansi_pen.dart';
 export './src/util/reg_exp_string.dart';
 export './src/util/log.dart';
 export './src/util/enum_converter.dart';
-export './src/util/test.dart';
 export './src/util/decide.dart';
 export './src/util/result.dart';

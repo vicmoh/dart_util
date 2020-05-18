@@ -10,7 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  colorize: ^2.0.0
 
 dev_dependencies:
   flutter_test:

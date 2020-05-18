@@ -1,5 +1,4 @@
 import './tiny_tester.dart';
-import './test.dart';
 import '../extension/string_extension.dart';
 
 class Log {
