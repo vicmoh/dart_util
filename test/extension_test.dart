@@ -8,6 +8,8 @@ import '../lib/src/extension/map_extension.dart';
 import '../lib/src/extension/list_extension.dart';
 
 void extensionTest() {
+
+   
   Test<String, String>.single(
       description: 'Testing if string has access like list.',
       input: 'test string',

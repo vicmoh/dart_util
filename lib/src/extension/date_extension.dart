@@ -132,7 +132,7 @@ extension DateTimeExtension on DateTime {
           '/' +
           this.day.toString().padLeft(2, '0') +
           '/' +
-          this.year.toString().substring(2,4);
+          this.year.toString().substring(2, 4);
     return '${this.getMonth(isLongFormat: isMonthFullString)} ${this.day}, ${this.year}';
   }
 }

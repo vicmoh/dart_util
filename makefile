@@ -4,10 +4,14 @@ EXPORT_FILE=dart_util
 all: export sure clean
 
 # Git add, commit, and push.
-git: all
+git: all format
 	git add -A
 	git commit -m '$(m)'
 	git push
+
+# Format core.
+format:
+	flutter format ./lib/src/
 
 # Create an export file.
 export:

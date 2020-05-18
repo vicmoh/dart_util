@@ -1,4 +1,5 @@
-import '../util/test.dart';
+import './tiny_tester.dart';
+import './test.dart';
 import '../extension/string_extension.dart';
 
 class Log {
@@ -29,8 +30,8 @@ class Log {
   /// this does does not print to the console
   /// and does not track the logs.
   /// It will only return the string.
-  static String asString(dynamic object, String message) {
-    String messageTemp = message.trim();
+  static String asString(object, message) {
+    String messageTemp = '$message'.trim();
     String tag = object is String
         ? _trim(object)
         : _trim(object?.runtimeType?.toString());
@@ -47,9 +48,9 @@ class Log {
   /// ```
   /// Log(this, 'Hello World!');
   /// ```
-  Log(dynamic object, String message)
+  Log(object, message)
       : timestamp = DateTime.now(),
-        this.message = message.trim(),
+        this.message = '$message'.trim(),
         this.tag = object is String
             ? _trim(object)
             : _trim(object?.runtimeType?.toString()) {
@@ -85,59 +86,32 @@ class Log {
 
   /// Function for testing this class.
   static void runTest() {
+    const debug = "Log(): ";
     Log.disable();
-    var logTest = Log('this', 'Hello World!');
-    Test.single(
-        description:
-            'Testing if Log() removes ":", "()" and duplicate white spaces on function.',
-        input: logTest.toString(),
-        expectation: 'Log(): Hello World!',
-        test: (input, expect) =>
-            Log(logTest, 'Hello World!').toString() == expect);
-    Test<String, String>.batch(
-        description: 'Testing if log() removes "():"',
-        test: (input, expect) {
-          return Log(input, 'testing').toString() == expect;
-        },
-        inputs: [
-          'test():',
-          'test():    ',
-          null
-        ],
-        expectations: [
-          'test(): testing',
-          'test(): testing',
-          '[NULL](): testing'
-        ]);
-    Test.single(
-        description:
-            'Testing if Log.asString() removes ":", "()" and duplicate white spaces on function.',
-        input: logTest.toString(),
-        expectation: 'Log(): Hello World!',
-        test: (input, expect) =>
-            Log.asString(logTest, 'Hello World!') == expect);
-    Test<String, String>.batch(
-        description: 'Testing if log.asString() removes "():"',
-        test: (input, expect) {
-          return Log.asString(input, 'testing') == expect;
-        },
-        inputs: [
-          'test():',
-          'test():    ',
-          null
-        ],
-        expectations: [
-          'test(): testing',
-          'test(): testing',
-          '[NULL](): testing'
-        ]);
-    Test<String, String>.batch(
-        description: 'Testing if Log() period will be removed',
-        test: (i, e) {
-          var res = Log.asString('test.this(): ', i);
-          return res == e;
-        },
-        inputs: ['test'],
-        expectations: ['test.this(): test']);
+    print('Testing Log()');
+
+    describe('Log() should remove ":", "()" and duplicate white spaces.', () {
+      expect('Log(): Hello World!',
+          Log(debug, '\t \n Hello World! \n \t').toString());
+    });
+
+    describe('Log.asString() should remove ":", "()" and white spaces.', () {
+      expect('Log(): Hello World!',
+          Log.asString(debug, '\t \n Hello World! \n \t'));
+    });
+
+    describe("Log() should remove period.", () {
+      expect('test.this(): test', Log.asString('test.this(): ', 'test'));
+    });
+
+    describe("Log() should convert to string when object is passed.", () {
+      var res;
+      try {
+        throw Exception('Some error');
+      } catch (err) {
+        res = Log.asString(debug, err);
+      }
+      expect('Log(): Exception: Some error', res);
+    });
   }
 }

@@ -2,6 +2,8 @@ import 'package:colorize/colorize.dart';
 import 'package:meta/meta.dart';
 import '../extension/string_extension.dart';
 
+int _totalFailure = 0;
+
 enum _TestType { batch, single }
 
 class Test<I, E> {
@@ -49,7 +51,7 @@ class Test<I, E> {
   /// Red color string for coloring the bash.
   static const RED_COLOR = '\033[1;31m';
 
-  /// Set to no color for coloring tha bash.
+  /// Set to no color for coloring that bash.
   static const NO_COLOR = '\033[1;31m';
 
   /// Set the count checking to 0.
