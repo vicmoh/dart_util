@@ -1,5 +1,4 @@
 import '../lib/src/util/log.dart';
-import '../lib/src/util/test.dart';
 import '../lib/src/util/tiny_tester.dart';
 
 import 'extension_test.dart';
