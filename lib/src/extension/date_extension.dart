@@ -96,8 +96,9 @@ extension DateTimeExtension on DateTime {
   /// Convert to time string in the format of:
   /// Current day: "11:11" .
   /// Within week: "Wed 11:11".
-  /// Within year: 'Jan 7 at 12:30'
-  String toDynamicTime({bool isTwelveHour = false}) {
+  /// Within year: 'Jan 7 at 12:30'.
+  /// If [asNumber] is true: '11/11/11 at 12:30'.
+  String toDynamicTime({bool isTwelveHour = false, bool asNumber = false}) {
     DateTime date = this;
     var now = DateTime.now();
     if (now.difference(date).inDays == 0)
@@ -106,7 +107,7 @@ extension DateTimeExtension on DateTime {
       return date.getDay() + ' at ' + date.getTime(isTwelveHour: isTwelveHour);
     if (now.difference(date).inDays <= 256)
       return date.toMonthDateAtTime(isTwelveHour: isTwelveHour);
-    return date.toMonthDayAndYear(asNumber: false) +
+    return date.toMonthDayAndYear(asNumber: asNumber) +
         ' at ${date.getTime(isTwelveHour: isTwelveHour)}';
   }
 
@@ -125,8 +126,10 @@ extension DateTimeExtension on DateTime {
   /// December 13, 1995. If [asNumber] is true, then
   /// it will return in the format of "<month>/<day>/<year>",
   /// for ex. "11/11/11".
-  String toMonthDayAndYear(
-      {bool isMonthFullString = false, bool asNumber = false}) {
+  String toMonthDayAndYear({
+    bool isMonthFullString = false,
+    bool asNumber = false,
+  }) {
     if (asNumber)
       return this.month.toString().padLeft(2, '0') +
           '/' +
