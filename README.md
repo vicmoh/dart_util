@@ -4,7 +4,7 @@ This package contain dart utilities.
 
 ## Installation
 
-To install this library, go to the `pubspec.yaml` on your root
+Go to the `pubspec.yaml` on your root
 project and add the dependency like below: 
 
 ```
