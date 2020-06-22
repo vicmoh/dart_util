@@ -169,4 +169,9 @@ void extensionTest() {
         RegExp("[\\w]+ [0-9]?[0-9], [0-9]* at [0-9]?[0-9]:[0-9][0-9]")
             .hasMatch(date));
   });
+
+  describe('forEachToList() should return correct list.', () {
+    var list = [1, 2, 3];
+    expect(true, '[2, 3, 4]' == list.forEachToList((e) => e + 1).toString());
+  });
 }

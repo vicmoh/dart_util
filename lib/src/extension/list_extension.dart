@@ -8,6 +8,14 @@ extension ListExtension<E> on List<E> {
     return List<E>.from(this);
   }
 
+  /// Similar to for each function excepts
+  /// that it returns a list.
+  List<E> forEachToList(E Function(E) callback) {
+    List<E> res = [];
+    this.forEach((el) => res.add(callback(el)));
+    return res;
+  }
+
   /// Check if list contains certain value in the object.
   /// The [compareCallback] is the condition in which if return true
   /// you found that object, else return false.
