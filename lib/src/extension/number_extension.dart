@@ -30,9 +30,9 @@ extension NumExtension on num {
     return theNumberToBeReturn;
   }
 
-  /// Generate random integer [from] an int [to] another int.
-  static int generateRandomNumber({int from, int to}) {
-    int min = from ?? 0;
+  /// Generate random integer from [this] [to] another int.
+  int toRandom(int to) {
+    int min = this ?? 0;
     int max = to ?? min;
     var rnd = new Random();
     int ranNum = min + rnd.nextInt(max - min);
