@@ -87,9 +87,9 @@ extension DateTimeExtension on DateTime {
     final String day = (isLongFormat) ? longDay : 'd';
     if (diffByDays < 365) return diffByDays.toString() + day;
     // By years
-    int diffByYears = diffByDays / 365 as int;
-    final String longYear = (diffByYears == 1) ? ' day' : ' days';
-    final String year = (isLongFormat) ? longYear : 'd';
+    double diffByYears = diffByDays / 365;
+    final String longYear = (diffByYears == 1) ? ' year' : ' years';
+    final String year = (isLongFormat) ? longYear : 'y';
     return diffByYears.toStringAsFixed(0) + year;
   }
 

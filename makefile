@@ -19,7 +19,7 @@ export:
 
 # Run test harsness.
 sure: 
-	cd test; dart --enable-asserts test.dart;
+	dart ./test/test.dart;
 
 # Clean the python caches.
 clean:

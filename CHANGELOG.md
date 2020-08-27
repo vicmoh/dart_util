@@ -1,3 +1,4 @@
-## [0.0.1] - TODO: Add release date.
+## [0.0.10] - 08/27/2020.
 
-* TODO: Describe initial release.
+* Fixed the remove duplicate white space function of an edge case 
+where sometimes it removes all new lines.

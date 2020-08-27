@@ -55,9 +55,11 @@ extension StringExtension on String {
   String removeDuplicateWhiteSpaces() {
     if (this == null) return this;
     String toReturn = this.trim();
-    toReturn = toReturn.replaceAll(RegExp('  +'), ' ');
-    toReturn = toReturn.replaceAll(RegExp('\t\t+'), '\t');
-    toReturn = toReturn.replaceAll(RegExp('\n\n\n+'), '\n\n');
+    toReturn = toReturn.replaceAll(RegExp(r'\t+'), ' ');
+    toReturn = toReturn.replaceAll(RegExp(r'[ ]+'), ' ');
+    toReturn = toReturn.replaceAll(RegExp(r'\n[\t ]*'), '\n');
+    toReturn = toReturn.replaceAll(RegExp(r'\n\n[\n\t ]*'), '\n\n');
+    toReturn = toReturn.replaceAll(RegExp('\n[ ]+'), '\n');
     return toReturn;
   }
 
