@@ -56,6 +56,9 @@ stringExtensionTest() {
 
       expect('Hello\n\nworld!',
           'Hello\n\n \n world!'.removeDuplicateWhiteSpaces());
+      
+      expect('Hello\nworld!', 
+          'Hello\nworld!'.removeDuplicateWhiteSpaces());
     });
   });
 }
