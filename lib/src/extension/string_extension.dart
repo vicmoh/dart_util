@@ -78,7 +78,7 @@ extension StringExtension on String {
   /// of the string.
   /// Output example 14 as [maxLength]: Some string...
   String ellipsis(int maxLength) {
-    if (this == null) return '';
+    if (this == null) return this;
     String temp = this;
     if (temp.length >= maxLength)
       temp = temp.substring(0, maxLength - 3) + '...';
@@ -87,10 +87,10 @@ extension StringExtension on String {
 
   /// Convert string first letter to uppercase case, for example
   /// value is 'hello' it returns 'Hello'.
-  /// This will remove any duplicate while space and
-  /// add period if [withPeriod] is true.
+  /// This will remove any duplicate white space.
+  /// Add period at the end if [withPeriod] is true.
   String toSentenceCase({bool withPeriod = false}) {
-    if (this == null) return '';
+    if (this == null) return this;
     var temp = this;
     String firstChar = temp.substring(0, 1).toUpperCase();
     String sen = (firstChar + temp.substring(1, temp.length))
@@ -101,44 +101,61 @@ extension StringExtension on String {
     return sen;
   }
 
-  /// Reference: https://capitalizemytitle.com/.
+  /// Lower case the first character in string.
+  String toFirstCharLower() {
+    if (this == null) return this;
+    var temp = this;
+    String firstChar = temp.substring(0, 1).toLowerCase();
+    String res = (firstChar + temp.substring(1, temp.length))
+        .trim()
+        .removeDuplicateWhiteSpaces();
+    return res;
+  }
+
+  /// Reference1: https://capitalizemytitle.com/.
+  /// Reference2: https://www.bkacontent.com/how-to-correctly-use-apa-style-title-case/
+  /// Reference3: https://titlecase.com/
   /// Capitalize the first and the last word.
   /// Capitalize nouns, pronouns, adjectives, verbs, adverbs, and subordinate conjunctions.
   /// Lowercase articles (a, an, the), coordinating conjunctions, and prepositions.
   /// Lowercase the ‘to’ in an infinitive (I want to play guitar).
-  String toTitleCase({Set<String> uncounted}) {
-    const Set<String> _prepositions = {
+  /// If [capAllWords] is true, all words first character will be capitalize.
+  String toTitleCase({Set<String> uncounted, capAllWords: false}) {
+    if (this == null) return this;
+    Set<String> _prepositions = {
       'a',
+      'for',
+      'so',
       'an',
+      'in',
       'the',
       'and',
-      'but',
-      'or',
-      'for',
       'nor',
-      'as',
-      'at',
-      'by',
-      'from',
-      'in',
-      'into',
-      'near',
-      'of',
-      'on',
-      'onto',
       'to',
-      'with'
-    };
-    String temp = this;
-    var words = temp.removeDuplicateWhiteSpaces().split(' ');
-    int count = 0;
-    return words.reduce((res, word) {
-      count++;
-      if (_prepositions.contains(word) && count == 1) return res + word;
-      if (_prepositions.contains(word) || word.length <= 4)
-        return res += ' ' + word;
-      return res += ' ' + word.toLowerCase().toSentenceCase();
-    }).replaceAll(RegExp('[.]+'), '');
+      'at',
+      'of',
+      'up',
+      'but',
+      'on',
+      'yet',
+      'by',
+      'or',
+    }..addAll(uncounted ?? {});
+    var words = this.removeDuplicateWhiteSpaces().split(' ');
+    var res = '';
+    for (int x = 0; x < words.length; x++) {
+      if (x != 0 &&
+          !capAllWords &&
+          (_prepositions.contains(words[x]) /*|| words[x].length < 4*/))
+        res += (x == 0 ? '' : ' ') + words[x].toLowerCase();
+      else
+        res += (x == 0 ? '' : ' ') + words[x].toSentenceCase();
+    }
+
+    return res
+        .toSentenceCase()
+        .replaceAll(RegExp('[.]+'), '')
+        .removeDuplicateWhiteSpaces();
   }
 
   /// Check if the string is valid email format.
