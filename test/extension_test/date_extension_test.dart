@@ -2,7 +2,7 @@ import 'package:test/test.dart';
 import '../../lib/src/extension/date_extension.dart';
 
 dateExtensionTest() {
-  group('Date extension test', () {
+  group('Date extension test.', () {
     test('getMonth(isLongFormat: true) should get the long form month string.',
         () {
       expect('January', DateTime(2020, 1, 13).getMonth(isLongFormat: true));

@@ -7,7 +7,19 @@ class EnumConverter {
     return enumItem.toString().split('.')[1];
   }
 
-  /// Convert the [enum] to camel case [String].
+  /// Convert the [enum] clean to camel case [String].
+  /// Example
+  /// ```
+  /// SomeEnum.oneTwo
+  /// ```
+  /// or
+  /// ```
+  /// SomeEnum.one_two
+  /// ```
+  /// Will result
+  /// ```
+  /// "One two"
+  /// ```
   static String asCamelCaseString(enumItem) {
     if (enumItem == null) return null;
     final parsed = EnumConverter.asString(enumItem);

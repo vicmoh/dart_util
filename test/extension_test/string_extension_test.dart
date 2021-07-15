@@ -2,7 +2,7 @@ import 'package:test/test.dart';
 import '../../lib/src/extension/string_extension.dart';
 
 stringExtensionTest() {
-  group('String extension test', () {
+  group('String extension test.', () {
     test('Test if string is a list of char string.', () {
       expect('test string'[3], 't');
     });

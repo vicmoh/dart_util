@@ -2,7 +2,7 @@ import 'package:test/test.dart';
 import '../../lib/src/extension/list_extension.dart';
 
 listExtensionTest() {
-  group('List extension test', () {
+  group('List extension test.', () {
     test('sortBy() list should be able to sort.', () {
       expect(
         ['a', 'b', 'c', 'y', 'z'].toString(),

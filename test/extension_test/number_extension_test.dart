@@ -2,7 +2,7 @@ import 'package:test/test.dart';
 import '../../lib/src/extension/number_extension.dart';
 
 numberExtensionTest() {
-  group('Number extension test', () {
+  group('Number extension test.', () {
     test('toShortForm() should convert 1000 to 1k.', () {
       expect('1k', 1000.toShortForm());
     });
