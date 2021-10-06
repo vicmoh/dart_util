@@ -5,7 +5,6 @@ extension NumExtension on num {
   /// it in '1k' instead of '1000' and other
   /// big number up to trillion.
   String toShortForm() {
-    if (this == null) return '';
     // To shorten the code.
     String theNumberToBeReturn = this.toString();
     var theNewShortNumber = (
@@ -20,20 +19,21 @@ extension NumExtension on num {
       return stringNum.replaceAll(".0", "");
     };
     // Conditions for the number of digits.
-    if (this >= 1000) theNumberToBeReturn = theNewShortNumber(this, 1000, "k");
+    if (this >= 1000)
+      theNumberToBeReturn = theNewShortNumber(this as int, 1000, "k");
     if (this >= 1000000)
-      theNumberToBeReturn = theNewShortNumber(this, 1000000, "m");
+      theNumberToBeReturn = theNewShortNumber(this as int, 1000000, "m");
     if (this >= 1000000000)
-      theNumberToBeReturn = theNewShortNumber(this, 1000000000, "b");
+      theNumberToBeReturn = theNewShortNumber(this as int, 1000000000, "b");
     if (this >= 1000000000000)
-      theNumberToBeReturn = theNewShortNumber(this, 1000000000000, "t");
+      theNumberToBeReturn = theNewShortNumber(this as int, 1000000000000, "t");
     return theNumberToBeReturn;
   }
 
   /// Generate random integer from [this] [to] another int.
   int toRandom(int to) {
-    int min = this ?? 0;
-    int max = to ?? min;
+    int min = this as int? ?? 0;
+    int max = to;
     var rnd = new Random();
     int ranNum = min + rnd.nextInt(max - min);
     return ranNum;

@@ -15,8 +15,6 @@ void startTesting({bool isSuppress = false}) {
 }
 
 void describe(String desc, Function() test) {
-  assert(desc != null);
-  assert(test != null);
   if (!_isSuppress)
     stdout.write(
         '${_cyan('#' + (++_caseNum).toString() + ":")} ${_yellow(desc + " -> ")}');

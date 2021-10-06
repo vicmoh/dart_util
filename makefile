@@ -1,7 +1,7 @@
 EXPORT_FILE=dart_util
 
 # Export and test the program.
-all: export sure clean
+all: mod-export sure clean
 
 # Git add, commit, and push.
 git: all format
@@ -14,7 +14,7 @@ format:
 	flutter format ./lib/src/
 
 # Create an export file.
-export:
+mod-export:
 	cd lib; cd flutter_package_exporter; make FILE='$(EXPORT_FILE)'
 
 # Run test harsness.
@@ -33,3 +33,10 @@ install:
 # Create a new version branch.
 new:
 	git branch $(version); git checkout $(version); git push --set-upstream origin $(version); git checkout master;
+
+uninstall-module:
+	git submodule deinit -f $(dir) || echo "\nFailed to deinit\n";
+	rm -rf .git/modules/$(dir) || echo "\nFailed to remove modules\n";
+	git rm -f $(dir) || echo "\nFailed to remove dir\n";
+
+

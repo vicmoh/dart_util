@@ -1,3 +1,5 @@
+
+
 import '../../lib/src/util/enum_converter.dart';
 import 'package:test/test.dart';
 

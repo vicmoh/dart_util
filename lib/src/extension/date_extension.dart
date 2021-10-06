@@ -4,8 +4,7 @@ extension DateTimeExtension on DateTime {
   /// return 'Jan'. If [isLongFormat] is true
   /// it will return 'January'.
   String getMonth({bool isLongFormat = false}) {
-    var currentMonth = DateTime.now().month;
-    if (this != null) currentMonth = this.month;
+    var currentMonth = this.month;
     if (currentMonth == 1) return (isLongFormat) ? 'January' : 'Jan';
     if (currentMonth == 2) return (isLongFormat) ? 'February' : 'Feb';
     if (currentMonth == 3) return (isLongFormat) ? 'March' : 'Mar';
@@ -24,8 +23,7 @@ extension DateTimeExtension on DateTime {
   /// If the day is 1 then it return 'Mon'. If
   /// [isLongFormat] is true, it will return 'Monday'.
   String getDay({bool isLongFormat = false}) {
-    var currentDay = DateTime.now().weekday;
-    if (this != null) currentDay = this.weekday;
+    var currentDay = this.weekday;
     if (currentDay == 1) return (isLongFormat) ? 'Monday' : 'Mon';
     if (currentDay == 2) return (isLongFormat) ? 'Tuesday' : 'Tue';
     if (currentDay == 3) return (isLongFormat) ? 'Wednesday' : 'Wed';
@@ -40,12 +38,9 @@ extension DateTimeExtension on DateTime {
   /// For ex. '20:00' if [isTwelveHourClock] is true,
   /// it will return '8:00 PM'.
   String getTime({bool isTwelveHour = false}) {
-    var hour = DateTime.now().hour.toString();
-    var minute = DateTime.now().minute.toString();
-    if (this != null) {
-      hour = this.hour.toString();
-      minute = this.minute.toString();
-    }
+    var hour = this.hour.toString();
+    var minute = this.minute.toString();
+
     // Check if it is twenty hour clock.
     if (isTwelveHour) {
       String amPmString = 'AM';

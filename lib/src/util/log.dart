@@ -18,11 +18,10 @@ class Log {
 
   /// Trim any white spaces and remove any symbols.
   static String _trim(String val) {
-    if (val == null) return '[NULL]';
     return val
-        ?.trim()
-        ?.removeDuplicateWhiteSpaces()
-        ?.replaceAll(RegExp('[^a-zA-Z0-9.]+'), '');
+        .trim()
+        .removeDuplicateWhiteSpaces()
+        .replaceAll(RegExp('[^a-zA-Z0-9.]+'), '');
   }
 
   /// Similar to the Log() function, however,
@@ -31,10 +30,9 @@ class Log {
   /// It will only return the string.
   static String asString(object, message) {
     String messageTemp = '$message'.trim();
-    String tag = object is String
-        ? _trim(object)
-        : _trim(object?.runtimeType?.toString());
-    return tag == null ? '[NULL]: ' + messageTemp : tag + '(): ' + messageTemp;
+    String tag =
+        object is String ? _trim(object) : _trim(object.runtimeType.toString());
+    return tag + '(): ' + messageTemp;
   }
 
   /// Print function replacement. This function will
@@ -52,7 +50,7 @@ class Log {
         this.message = '$message'.trim(),
         this.tag = object is String
             ? _trim(object)
-            : _trim(object?.runtimeType?.toString()) {
+            : _trim(object.runtimeType.toString()) {
     // Keep track error if needed.
     if (trackLogs) {
       if (_stackLogs.length < 256 * 2) {
@@ -69,7 +67,7 @@ class Log {
 
   /// The list of errors collected in the past.
   static List<Log> _stackLogs = [];
-  static List<Log> get list => List<Log>.of(_stackLogs ?? []).toList();
+  static List<Log> get list => List<Log>.of(_stackLogs).toList();
 
   /// To json object.
   Map<String, dynamic> toJson() => {
@@ -79,9 +77,7 @@ class Log {
       };
 
   @override
-  String toString() => this.tag == null
-      ? '[NULL]: ' + this.message
-      : this.tag + '(): ' + this.message;
+  String toString() => this.tag + '(): ' + this.message;
 
   /// Function for testing this class.
   static void runTest() {

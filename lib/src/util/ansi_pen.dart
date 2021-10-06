@@ -6,6 +6,7 @@
 /// terminal; disable via [color_disabled] or use Eclipse with the Dart and
 /// AnsiConsol plugins!
 ///
+
 library ansicolor;
 
 /// Globally enable or disable [AnsiPen] settings
@@ -28,7 +29,7 @@ class AnsiPen {
   /// changed by another pen or [up].
   String toString() {
     if (color_disabled) return "";
-    if (_pen != null) return _pen;
+    if (_pen != null) return _pen!;
 
     StringBuffer sb = new StringBuffer();
     if (_fcolor != null) {
@@ -40,7 +41,7 @@ class AnsiPen {
     }
 
     _pen = sb.toString();
-    return _pen;
+    return _pen!;
   }
 
   /// Returns control codes to change the terminal colors.
@@ -72,7 +73,7 @@ class AnsiPen {
 
   /// Sets the pen color to a grey scale value between 0.0 and 1.0.
   void gray({level = 1.0, bool bg = false}) =>
-      xterm(232 + (level.clamp(0.0, 1.0) * 23).round(), bg: bg);
+      xterm(232 + (level.clamp(0.0, 1.0) * 23).round() as int, bg: bg);
 
   void _std(int color, bool bold, bool bg) =>
       xterm(color + (bold ? 8 : 0), bg: bg);
@@ -80,11 +81,11 @@ class AnsiPen {
   /// Directly index the xterm 256 color palette.
   void xterm(int color, {bool bg = false}) {
     _pen = null;
-    var c = color.toInt().clamp(0, 256);
+    num c = color.toInt().clamp(0, 256);
     if (bg) {
-      _bcolor = c;
+      _bcolor = c as int?;
     } else {
-      _fcolor = c;
+      _fcolor = c as int?;
     }
   }
 
@@ -100,11 +101,11 @@ class AnsiPen {
     _bcolor = _fcolor = null;
   }
 
-  int _fcolor;
-  int get foreground => _fcolor;
-  int _bcolor;
-  int get background => _bcolor;
-  String _pen;
+  int? _fcolor;
+  int? get foreground => _fcolor;
+  int? _bcolor;
+  int? get background => _bcolor;
+  String? _pen;
 }
 
 /// ANSI Control Sequence Introducer, signals the terminal for new settings.
