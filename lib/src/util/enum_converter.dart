@@ -1,9 +1,11 @@
+import 'package:collection/collection.dart' show IterableExtension;
+
 /// This class is used to convert [enum] value
 /// to [String] or [enum] to [String] type.
+
 class EnumConverter {
   /// Convert the [enum] to [String].
-  static String asString(enumItem) {
-    if (enumItem == null) return null;
+  static String asString<T>(T enumItem) {
     return enumItem.toString().split('.')[1];
   }
 
@@ -20,9 +22,8 @@ class EnumConverter {
   /// ```
   /// "One two"
   /// ```
-  static String asCamelCaseString(enumItem) {
-    if (enumItem == null) return null;
-    final parsed = EnumConverter.asString(enumItem);
+  static String asCamelCaseString<T>(T enumItem) {
+    final parsed = EnumConverter.asString<T>(enumItem);
     return _Helper.camelCaseToWords(parsed);
   }
 
@@ -38,13 +39,10 @@ class EnumConverter {
   /// {@tool-end}
   ///
   /// Better to call the <EnumType> to make sure it return the proper type.
-  static T asEnum<T>(List<T> enumValues, String toBeConverted) {
-    if (toBeConverted == null || enumValues == null) return null;
-    return enumValues.singleWhere(
-        (enumItem) =>
-            EnumConverter.asString(enumItem)?.toLowerCase() ==
-            toBeConverted?.toLowerCase(),
-        orElse: () => null);
+  static T? asEnum<T>(List<T> enumValues, String toBeConverted) {
+    return enumValues.singleWhereOrNull((enumItem) =>
+        EnumConverter.asString(enumItem).toLowerCase() ==
+        toBeConverted.toLowerCase());
   }
 }
 
@@ -89,17 +87,17 @@ class _Helper {
       ']+';
 
   static String camelCaseToWords(
-    String subject, [
+    String? subject, [
     Pattern customPattern = _defaultPattern,
   ]) {
     if (subject is! String || subject.isEmpty) return "";
-    RegExp pattern;
+    late RegExp pattern;
     if (customPattern is String)
       pattern = RegExp(customPattern);
     else if (customPattern is RegExp) pattern = customPattern;
     final words = pattern.allMatches(subject).map((m) => m.group(0)).toList();
-    words[0] = words[0][0].toUpperCase() + words[0].substring(1);
-    for (int i = 1; i < words.length; i++) words[i] = words[i].toLowerCase();
+    words[0] = words[0]![0].toUpperCase() + words[0]!.substring(1);
+    for (int i = 1; i < words.length; i++) words[i] = words[i]!.toLowerCase();
     return words.join(' ');
   }
 }

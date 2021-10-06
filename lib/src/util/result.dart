@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 enum ErrorTypes { other, none, server, ui, system, validation }
 
 class Result<T> implements Exception {
@@ -9,7 +7,7 @@ class Result<T> implements Exception {
   static bool _trackErrors = true;
 
   /// Any data to be hold.
-  final T value;
+  final T? value;
 
   /// The message for the client user.
   final String clientMessage;
@@ -38,7 +36,7 @@ class Result<T> implements Exception {
   }
 
   /// The client message error.
-  String get message => clientMessage ?? WENT_WRONG_MESSAGE;
+  String get message => clientMessage;
 
   /// Suppress error to be be printed in console..
   static void suppress() => _suppressErr = true;
@@ -58,9 +56,9 @@ class Result<T> implements Exception {
   /// is used when you [throw] an error. If value is null it will be null.
   Result.hasError({
     this.value,
-    @required this.clientMessage,
-    @required this.devMessage,
-    @required this.errorType,
+    required this.clientMessage,
+    required this.devMessage,
+    required this.errorType,
   })  : this.timestamp = DateTime.now(),
         this.hasError = true {
     // Keep track error if needed
@@ -92,7 +90,7 @@ class Result<T> implements Exception {
 
   /// The list of errors collected in the past
   static List<Result> _stackErrors = [];
-  static List<Result> get list => List<Result>.of(_stackErrors ?? []).toList();
+  static List<Result> get list => List<Result>.of(_stackErrors).toList();
 
   /// Run a test by calling the error test 9999 times
   /// in a loop. This function is only for test purpose only.
@@ -107,5 +105,5 @@ class Result<T> implements Exception {
   }
 
   @override
-  String toString() => this.message?.toString() ?? '';
+  String toString() => this.message.toString();
 }

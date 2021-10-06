@@ -42,7 +42,6 @@ extension StringExtension on String {
   /// Otherwise if it contains white spaces or punctuation
   /// and other symbol it will return [false].
   bool isAlphanumeric() {
-    assert(this != null);
     return this.contains(RegExp(r'[^A-Za-z0-9]')) ? false : true;
   }
 
@@ -53,7 +52,6 @@ extension StringExtension on String {
   /// Remove duplicate tabs to single tabs.
   /// Remove duplicate new lines to single new lines.
   String removeDuplicateWhiteSpaces() {
-    if (this == null) return this;
     String toReturn = this.trim();
     toReturn = toReturn.replaceAll(RegExp(r'\t+'), ' ');
     toReturn = toReturn.replaceAll(RegExp(r'[ ]+'), ' ');
@@ -66,7 +64,6 @@ extension StringExtension on String {
   /// Turn the string input a list of words
   /// that are used for indexing.
   List<String> toIndexableList() {
-    if (this == null) return [];
     return Set.of(this
         .split(RegExp(r'[^A-Za-z0-9]'))
         .map((el) => el.toLowerCase())
@@ -78,7 +75,6 @@ extension StringExtension on String {
   /// of the string.
   /// Output example 14 as [maxLength]: Some string...
   String ellipsis(int maxLength) {
-    if (this == null) return this;
     String temp = this;
     if (temp.length >= maxLength)
       temp = temp.substring(0, maxLength - 3) + '...';
@@ -90,7 +86,6 @@ extension StringExtension on String {
   /// This will remove any duplicate white space.
   /// Add period at the end if [withPeriod] is true.
   String toSentenceCase({bool withPeriod = false}) {
-    if (this == null) return this;
     var temp = this;
     String firstChar = temp.substring(0, 1).toUpperCase();
     String sen = (firstChar + temp.substring(1, temp.length))
@@ -103,7 +98,6 @@ extension StringExtension on String {
 
   /// Lower case the first character in string.
   String toFirstCharLower() {
-    if (this == null) return this;
     var temp = this;
     String firstChar = temp.substring(0, 1).toLowerCase();
     String res = (firstChar + temp.substring(1, temp.length))
@@ -120,8 +114,7 @@ extension StringExtension on String {
   /// Lowercase articles (a, an, the), coordinating conjunctions, and prepositions.
   /// Lowercase the ‘to’ in an infinitive (I want to play guitar).
   /// If [capAllWords] is true, all words first character will be capitalize.
-  String toTitleCase({Set<String> uncounted, capAllWords: false}) {
-    if (this == null) return this;
+  String toTitleCase({Set<String>? uncounted, capAllWords: false}) {
     Set<String> _prepositions = {
       'a',
       'for',

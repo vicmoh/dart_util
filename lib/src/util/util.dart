@@ -18,13 +18,11 @@ class Util {
   /// This include [newline], [spaces] and [tabs]. As well
   /// as [Symbols].
   static bool isAlphaDigitString(String val) {
-    assert(val != null);
-    return val?.contains(RegExp(r'[^A-Za-z0-9]'));
+    return val.contains(RegExp(r'[^A-Za-z0-9]'));
   }
 
   /// Remove duplicate spaces, tabs new lines.
   static String trimString(String val) {
-    if (val == null) return val;
     String toReturn = val.trim();
     toReturn = toReturn.replaceAll(RegExp('  +'), ' ');
     toReturn = toReturn.replaceAll(RegExp('\t\t+'), '\t');
@@ -34,7 +32,6 @@ class Util {
 
   /// Split the string in to list of lower string word.
   static List<String> indexable(String val) {
-    if (val == null) return [];
     return Set.of(val
         .split(RegExp(r'[^A-Za-z0-9]'))
         .map((el) => el.toLowerCase())
@@ -43,7 +40,6 @@ class Util {
 
   /// Set string with ellipsis.
   static String stringEllipsis(String toBeShorted, int endIndex) {
-    if (toBeShorted == null) return '';
     String temp = toBeShorted;
     if (temp.length >= endIndex) temp = temp.substring(0, endIndex - 3) + '...';
     return temp;
@@ -52,7 +48,6 @@ class Util {
   /// Convert string first letter to uppercase case, for example
   /// if [toBeConverted] value is 'hello' it returns 'Hello'.
   static String stringFirstCharToUpper(String toBeConverted) {
-    if (toBeConverted == null) return '';
     var temp = toBeConverted.toLowerCase();
     String firstChar = temp.substring(0, 1).toUpperCase();
     return firstChar + temp.substring(1, temp.length);
@@ -60,7 +55,6 @@ class Util {
 
   /// Remove leading space for string.
   static String removeWhiteSpace(String toBeTrimmed) {
-    if (toBeTrimmed == null) return '';
     String temp = toBeTrimmed;
     // Trim the leading white space
     temp = temp.replaceFirst(new RegExp(r"^\s+"), "");
@@ -74,7 +68,6 @@ class Util {
   /// it in '1k' instead of '1000' and other
   /// big number up to trillion.
   static String getShortNumRep(int number) {
-    if (number == null) return '';
     // To shorten the code
     String theNumberToBeReturn = number.toString();
     var theNewShortNumber = (
@@ -104,9 +97,8 @@ class Util {
   /// A string validator where the string cannot be empty
   /// if [toBeValidate] is invalid return feedback string else return null,
   /// hence it will [return null if nothing is wrong].
-  static String validateStringCannotBeEmpty(String toBeValidate) {
-    if (toBeValidate == null || toBeValidate.length == 0)
-      return "Field cannot be empty.";
+  static String? validateStringCannotBeEmpty(String toBeValidate) {
+    if (toBeValidate.length == 0) return "Field cannot be empty.";
     if (toBeValidate.length > 256) return "Cannot be longer than 256 character";
     return null;
   }
@@ -118,7 +110,7 @@ class Util {
   /// Get the month of the year
   /// if [from] param is empty it will get the current time.
   static String getTheMonthOfTheYear({
-    DateTime from,
+    DateTime? from,
     bool shortFormat = false,
   }) {
     var currentMonth = DateTime.now().month;
@@ -139,7 +131,7 @@ class Util {
 
   /// Get the current day of the week or from an object,
   /// if [from] param is empty it will get current time.
-  static String getTheDayOfTheWeek({DateTime from, bool longFormat = false}) {
+  static String getTheDayOfTheWeek({DateTime? from, bool longFormat = false}) {
     var currentDay = DateTime.now().weekday;
     if (from != null) currentDay = from.weekday;
     if (currentDay == 1) return (longFormat) ? 'Monday' : 'Mon';
@@ -154,7 +146,7 @@ class Util {
   /// Get the current time of day or from an object,
   /// if [from] param is empty it will get current time.
   static String getTheTimeOfTheDay({
-    DateTime from,
+    DateTime? from,
     bool isTwentyHourClock = true,
   }) {
     var hour = DateTime.now().hour.toString();
@@ -166,7 +158,7 @@ class Util {
 
     if (!isTwentyHourClock) {
       String amPmString = 'AM';
-      int hour12 = from.hour;
+      int hour12 = from!.hour;
       int min12 = from.minute;
       if (from.hour >= 12) {
         amPmString = 'PM';
@@ -189,7 +181,7 @@ class Util {
   /// Get time posted for posts and comments where
   /// format is ["day time"] ex. ["wed 11:11"],
   /// if param is empty it will get current time.
-  static String getDayAndTimeFormat({DateTime from}) {
+  static String getDayAndTimeFormat({DateTime? from}) {
     return Util.getTheDayOfTheWeek(from: from) +
         " " +
         Util.getTheTimeOfTheDay(from: from);
@@ -198,7 +190,8 @@ class Util {
   /// Function to get time difference,
   /// ex. it will return ["5h"] if time difference 5h,
   /// this is mostly used in social media app to show the time posted.
-  static String getTimeDifference({DateTime from, bool longFormat = false}) {
+  static String getTimeDifference(
+      {required DateTime from, bool longFormat = false}) {
     int diffByMins = DateTime.now().difference(from).inMinutes;
     final String longMin = (diffByMins == 1) ? ' minute' : ' minutes';
     final String minute = (longFormat) ? longMin : 'm';
@@ -223,10 +216,9 @@ class Util {
   /// Get a complete readable string of the date time
   /// in format of [MONTH, DAY, YEAR at TIME].
   static String dateTimeToString(DateTime dateTime) {
-    if (dateTime == null) return '';
     var month = Util.getTheMonthOfTheYear(from: dateTime);
     var time = Util.getTheTimeOfTheDay(from: dateTime);
-    return '$month ${dateTime?.day}, ${dateTime?.year} ' + 'at $time';
+    return '$month ${dateTime.day}, ${dateTime.year} ' + 'at $time';
   }
 
   //-------------------------------------------------
@@ -234,7 +226,7 @@ class Util {
   //-------------------------------------------------
 
   /// Generate random integer.
-  static int generateRandomNumber({int from, int to}) {
+  static int generateRandomNumber({int? from, int? to}) {
     int min = from ?? 0;
     int max = to ?? min;
     var rnd = new Random();
@@ -256,7 +248,6 @@ class Util {
 
   /// Extracts enum.toString's value.
   static String enumStringValue(String enumeration) {
-    if (enumeration == null) return "";
     return enumeration.split(".").last;
   }
 }
