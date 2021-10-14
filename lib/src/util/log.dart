@@ -53,9 +53,9 @@ class Log {
             : _trim(object.runtimeType.toString()) {
     // Keep track error if needed.
     if (trackLogs) {
+      print(this.toString());
       if (_stackLogs.length < 256 * 2) {
         _stackLogs.add(this);
-        print(this.toString());
       } else {
         _stackLogs.removeLast();
         _stackLogs.add(this);
