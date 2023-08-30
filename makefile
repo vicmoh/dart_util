@@ -11,7 +11,7 @@ git: all format
 
 # Format core.
 format:
-	flutter format ./lib/src/
+	dart format ./lib/src/
 
 # Create an export file.
 mod-export:

@@ -2,11 +2,11 @@ dependencies:
   collection: ^1.15.0-nullsafety.4
 name: dart_util
 description: Dart utilities.
-version: 0.0.13
+version: 0.0.14
 homepage: https://github.com/vicmoh/dart_util
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.17.0"
 
 dev_dependencies:
   mockito: ^5.0.16
